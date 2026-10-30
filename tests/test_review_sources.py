@@ -22,6 +22,7 @@ class ReviewTests(unittest.TestCase):
 
     def tearDown(self):
         server.DATA = self.old
+        server.diag.close()
         self.tmp.cleanup()
 
     def test_feed_whole_phrase_matching(self):
