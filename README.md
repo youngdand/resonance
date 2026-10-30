@@ -42,6 +42,10 @@ Tests use synthetic temporary data and mocked peer operations. Browser tests lau
 
 The Python modules separate storage, identity, library indexing, transfers and supplier transport. The browser has explicit modules for shared state, API access, rendering, collection/search controls and transfers. See [CONTRIBUTING.md](CONTRIBUTING.md) for the release rules.
 
+## Support Resonance
+
+If you enjoy using Resonance and would like to support its development, you can [buy me a coffee](https://buymeacoffee.com/tapeshack). Support is completely optional and always appreciated.
+
 ## Licensing and provenance
 
 The first-party Python interface and web client are MIT licensed; see [LICENSE](LICENSE). The separately maintained engine is a modified slskd fork, licensed under AGPL-3.0-only with Additional Terms. Its complete licence is in [engine/LICENSE](engine/LICENSE), with attribution in [engine/NOTICE](engine/NOTICE) and current provenance in [engine/UPSTREAM.json](engine/UPSTREAM.json). Preserve these files and the corresponding source when distributing the engine. This fork is not maintained by, endorsed by or affiliated with the slskd project or its authors.
