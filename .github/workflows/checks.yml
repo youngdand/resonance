@@ -24,6 +24,9 @@ jobs:
       - run: npm test
       - run: npx playwright install --with-deps chromium firefox
       - run: npm run test:browser
+        timeout-minutes: 5
+        env:
+          DEBUG: pw:browser
       - run: python scripts/build_release.py
   engine:
     runs-on: windows-latest
