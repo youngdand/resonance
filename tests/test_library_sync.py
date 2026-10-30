@@ -41,6 +41,7 @@ class LinkedLibraryTests(unittest.TestCase):
 
     def tearDown(self):
         server.DATA = self.old
+        server.diag.close()
         self.tmp.cleanup()
 
     def upstream(self, path, method="GET", body=None):

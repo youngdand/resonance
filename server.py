@@ -794,6 +794,7 @@ def main():
         pass
     finally:
         server.server_close()
+        diag.close()
 
 
 if __name__ == "__main__":

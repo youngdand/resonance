@@ -58,6 +58,7 @@ class ShowcaseTests(unittest.TestCase):
 
     def tearDown(self):
         server.DATA = self.old
+        server.diag.close()
         self.tmp.cleanup()
 
     def test_safe_artwork_rejects_untrusted_and_placeholder_images(self):

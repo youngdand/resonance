@@ -57,6 +57,7 @@ class ArtworkTests(unittest.TestCase):
 
     def tearDown(self):
         server.DATA = self.old
+        server.diag.close()
         self.tmp.cleanup()
 
     def test_identity_and_edition_must_match(self):

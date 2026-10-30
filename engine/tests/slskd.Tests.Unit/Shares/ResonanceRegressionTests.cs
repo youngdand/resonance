@@ -64,6 +64,7 @@ public sealed class ResonanceRegressionTests : IDisposable
         {
             Assert.Equal(@"E:\", new Share(@"[Music]E:\").LocalPath);
             Assert.Equal(@"\\server\music\", new Share(@"[Music]\\server\music\").LocalPath);
+            Assert.Equal(@"\\server\music\", new Share(@"[Music]\\server\music").LocalPath);
         }
     }
 

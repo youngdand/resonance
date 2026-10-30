@@ -40,6 +40,7 @@ class TransferProgressTests(unittest.TestCase):
 
     def tearDown(self):
         server.DATA = self.old
+        server.diag.close()
         self.tmp.cleanup()
 
     def test_download_snapshot_has_progress_and_speed_and_shares_one_upstream_read(

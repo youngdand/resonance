@@ -34,6 +34,7 @@
 
 namespace slskd.Shares
 {
+    using System;
     using System.IO;
     using System.Linq;
     using System.Text.Json.Serialization;
@@ -101,7 +102,13 @@ namespace slskd.Shares
             }
 
             // Preserve drive and UNC roots: E: is drive-relative, while E:\ is absolute.
-            LocalPath = Path.TrimEndingDirectorySeparator(Path.GetFullPath(FileSafety.LocalizePath(LocalPath)));
+            var fullPath = Path.GetFullPath(FileSafety.LocalizePath(LocalPath));
+            var rootPath = Path.GetPathRoot(fullPath);
+            var isRoot = string.Equals(fullPath.TrimEnd('/', '\\'), rootPath?.TrimEnd('/', '\\'),
+                global::System.OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal);
+            LocalPath = isRoot
+                ? (Path.EndsInDirectorySeparator(fullPath) ? fullPath : fullPath + Path.DirectorySeparatorChar)
+                : Path.TrimEndingDirectorySeparator(fullPath);
             RemotePath = Alias;
 
             Id = Compute.Sha1Hash(RemotePath);

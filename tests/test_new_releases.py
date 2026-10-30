@@ -44,6 +44,7 @@ class NewReleaseTests(unittest.TestCase):
     def tearDown(self):
         self.clock.stop()
         server.DATA = self.old
+        server.diag.close()
         self.tmp.cleanup()
 
     def library(self, name="Example Artist"):

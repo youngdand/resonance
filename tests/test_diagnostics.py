@@ -24,7 +24,19 @@ class DiagnosticTests(unittest.TestCase):
             h.close()
             diag.logger.removeHandler(h)
         server.DATA = self.old
+        server.diag.close()
         self.tmp.cleanup()
+
+    def test_shutdown_releases_log_file_and_can_reconfigure(self):
+        diag.event("before-close")
+        path = server.DATA / "logs" / "resonance.log"
+        diag.close()
+        renamed = path.with_suffix(".closed")
+        path.rename(renamed)
+        self.assertEqual(diag.logger.handlers, [])
+        diag.configure(server.DATA)
+        diag.event("after-reopen")
+        self.assertIn("after-reopen", path.read_text())
 
     def test_packaged_interface_and_service_versions_match(self):
         interface = (server.ROOT / "web" / "diagnostics.js").read_text()

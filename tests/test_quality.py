@@ -25,6 +25,7 @@ class QualityTests(unittest.TestCase):
 
     def tearDown(self):
         server.DATA = self.old
+        server.diag.close()
         self.tmp.cleanup()
 
     def accepted(self, path, method="GET", body=None):

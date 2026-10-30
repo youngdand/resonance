@@ -42,6 +42,16 @@ def configure(data, secrets=None):
             pass
 
 
+def close():
+    """Flush and release log handles before shutting down or removing a data directory."""
+    global log_dir
+    with lock:
+        for handler in list(logger.handlers):
+            handler.close()
+            logger.removeHandler(handler)
+        log_dir = None
+
+
 def redact(value):
     text = str(value)
     try:

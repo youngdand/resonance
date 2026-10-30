@@ -223,6 +223,7 @@ def import_cache(s, refresh=False):
         reread = 0
         s.scan_state.update(phase="metadata", total=len(files), roots=roots)
         for canonical, (path, root, f) in files.items():
+            canonical = os.path.normcase(os.path.realpath(path))
             previous = cached.get(canonical)
             fingerprint = None
             try:

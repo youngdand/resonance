@@ -31,6 +31,7 @@ class MetadataAPITests(unittest.TestCase):
 
     def tearDown(self):
         server.DATA = self.old
+        server.diag.close()
         self.tmp.cleanup()
 
     def upstream(self, path, *args):
