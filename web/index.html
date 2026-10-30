@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#101313" />
+    <title>Resonance · Your music, within reach</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="#search"
+        ><span class="brand-icon">≋</span> resonance<span class="brand-dot">.</span></a
+      >
+      <div class="workspace-label">YOUR WORKSPACE</div>
+      <nav id="navigation"></nav>
+      <div class="sidebar-bottom">
+        <div class="library-mini">
+          <span class="tiny-wave">▂▅▃▇▅</span>
+          <div>
+            <strong id="libraryCount">Your collection</strong
+            ><small id="librarySub">Connect your music folders</small>
+          </div>
+        </div>
+        <button class="nav-item" id="settingsNav">
+          <span>⚙</span> Settings <span class="shortcut">⌘ ,</span>
+        </button>
+        <div class="version">LOCAL FIRST <span id="appVersion">Release candidate</span></div>
+      </div>
+    </aside>
+    <div class="app">
+      <header>
+        <div class="crumb">Workspace <span>/</span> <strong id="crumb">Discover</strong></div>
+        <div class="header-right">
+          <button id="diagnosticsButton" aria-label="Open error history and diagnostics">
+            Diagnostics</button
+          ><button id="demoToggle" class="mode-pill">Demo mode</button
+          ><span class="connection" id="connection"><i></i> Not connected</span
+          ><button class="avatar" id="avatar" aria-label="Open settings">R</button>
+        </div>
+      </header>
+      <main id="main"></main>
+      <footer>
+        <span
+          ><i class="green-dot"></i>
+          <span id="footerStatus">Your music. Your workspace.</span></span
+        ><span>Resonance <b>·</b> Built around your collection</span>
+      </footer>
+    </div>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <dialog id="settingsDialog">
+      <div class="dialog-top">
+        <div>
+          <span class="eyebrow">MAKE IT YOURS</span>
+          <h2>Your workspace settings</h2>
+        </div>
+        <button class="icon-button" id="closeSettings" aria-label="Close settings">✕</button>
+      </div>
+      <form id="settingsForm">
+        <label
+          >slskd address<input id="slskUrl" placeholder="http://127.0.0.1:5030" required /></label
+        ><label
+          >API key<input
+            id="slskKey"
+            type="password"
+            autocomplete="off"
+            placeholder="Paste your slskd API key"
+        /></label>
+        <p class="hint">The key stays on this computer. Keep slskd running in the background.</p>
+        <label
+          >slskd configuration file <small>For sharing controls</small
+          ><input id="slskdConfig" placeholder="Enter the full path to your slskd.yml"
+        /></label>
+        <p class="hint">
+          Use the same file passed to slskd with --config. Sharing changes create backup copies
+          beside it.
+        </p>
+        <label
+          >Collection source<select id="librarySource" class="select">
+            <option value="slskd">slskd shared library (recommended)</option>
+            <option value="folders">Selected music folders, including unshared music</option>
+          </select></label
+        >
+        <p class="hint">
+          With the bundled backend, the shared library imports cached music tags directly. Older
+          slskd versions use a local tag cache.
+        </p>
+        <label
+          >Music folders <small>For selected-folder scanning · One full path per line</small
+          ><textarea id="roots" rows="3" placeholder="E:\Music"></textarea>
+        </label>
+        <p class="hint">Scanning reads tags and filenames. It never moves or changes your music.</p>
+        <label
+          >Hidden users <small>One username per line</small
+          ><textarea id="blocked" rows="2" placeholder="Users to exclude from results"></textarea>
+        </label>
+        <div class="dialog-actions">
+          <button type="button" class="secondary" id="testConnection">Test connection</button
+          ><button type="submit" class="primary">Save settings</button>
+        </div>
+        <p class="hint" id="settingsStatus" role="status"></p>
+      </form>
+      <details>
+        <summary>First-time setup</summary>
+        <p>
+          Run Setup-New-User.cmd to create your private account configuration, then
+          Start-Resonance-with-Engine.cmd. See docs/SETUP.md for the complete setup and upgrade
+          instructions. Your SoulseekQt queue is separate.
+        </p>
+      </details>
+    </dialog>
+    <dialog id="diagnosticPanel"></dialog>
+    <script src="build.js"></script>
+    <script src="diagnostics.js"></script>
+    <script src="ui_state.js"></script>
+    <script src="transfer_state.js"></script>
+    <script src="view_helpers.js"></script>
+    <script src="client_state.js"></script>
+    <script src="api_client.js"></script>
+    <script src="file_filters.js"></script>
+    <script src="album_selection.js"></script>
+    <script src="rendering.js"></script>
+    <script src="app.js"></script>
+    <script src="transfers.js"></script>
+    <script src="features.js"></script>
+    <script src="browse.js"></script>
+    <script src="discovery.js"></script>
+    <script src="showcase.js"></script>
+    <script src="artwork.js"></script>
+    <script src="realtime.js"></script>
+  </body>
+</html>

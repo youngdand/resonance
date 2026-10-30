@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>prometheus-net.AspNetCore.HealthChecks</id>
+    <version>8.2.1</version>
+    <authors>sandersaares</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>prometheus-net-logo.png</icon>
+    <readme>README.md</readme>
+    <projectUrl>https://github.com/prometheus-net/prometheus-net</projectUrl>
+    <description>ASP.NET Core Health Checks integration with Prometheus</description>
+    <copyright>Copyright © prometheus-net developers</copyright>
+    <tags>metrics prometheus aspnetcore</tags>
+    <repository type="git" url="https://github.com/prometheus-net/prometheus-net" commit="60e9106a83ff1274fec0022c37366f04822b1d1b" />
+    <dependencies>
+      <group targetFramework="net6.0">
+        <dependency id="prometheus-net.AspNetCore" version="8.2.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Diagnostics.HealthChecks" version="6.0.9" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

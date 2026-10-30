@@ -1,0 +1,18 @@
+{
+  "project": "slskd",
+  "repository": "https://github.com/slskd/slskd",
+  "baseCommit": "99171c6577f53b28e1e2238a205c04243c6256d5",
+  "fork": "Resonance Engine",
+  "maintainer": "Resonance contributors",
+  "license": "AGPL-3.0-only WITH Additional Terms (see LICENSE)",
+  "currentChanges": [
+    "Distinct branding and network identifier",
+    "Windows root handling and bounded cancellable share scans",
+    "Retain prior metadata on transient read failures; retry metadata parser",
+    "Revisioned paginated cached library API with ready-with-warnings status",
+    "Idempotent album batches and stable retry identities",
+    "Structured browse errors and bounded deadlines",
+    "Redacted configuration logging"
+  ],
+  "versionSource": "../VERSION"
+}

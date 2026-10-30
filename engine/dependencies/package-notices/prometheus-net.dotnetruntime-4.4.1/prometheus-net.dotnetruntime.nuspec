@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>prometheus-net.DotNetRuntime</id>
+    <version>4.4.1</version>
+    <authors>James Luck</authors>
+    <projectUrl>https://github.com/djluck/prometheus-net.DotNetRuntime</projectUrl>
+    <description>Exposes .NET core runtime metrics (GC, JIT, lock contention, thread pool, exceptions) using the prometheus-net package.</description>
+    <tags>Prometheus prometheus-net IOnDemandCollector runtime metrics gc jit threadpool contention stats</tags>
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.1">
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="3.0.0" exclude="Build,Analyzers" />
+        <dependency id="prometheus-net" version="3.1.2" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="net5.0">
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="3.0.0" exclude="Build,Analyzers" />
+        <dependency id="prometheus-net" version="3.1.2" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="net6.0">
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="3.0.0" exclude="Build,Analyzers" />
+        <dependency id="prometheus-net" version="3.1.2" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.1">
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="3.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Collections.Immutable" version="1.6.0" exclude="Build,Analyzers" />
+        <dependency id="prometheus-net" version="3.1.2" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

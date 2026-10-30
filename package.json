@@ -1,0 +1,13 @@
+{
+  "name": "resonance-quality-checks",
+  "private": true,
+  "scripts": {
+    "test": "node scripts/test_ui.cjs",
+    "test:browser": "node scripts/browser_tests.cjs",
+    "format": "prettier --write web tests/*.cjs scripts/*.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.51.1",
+    "prettier": "3.6.2"
+  }
+}

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Asp.Versioning.Mvc.ApiExplorer</id>
+    <version>10.2.1</version>
+    <authors>.NET Foundation and Contributors</authors>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>icon.png</icon>
+    <readme>README.md</readme>
+    <projectUrl>https://dotnet.github.io/aspnet-api-versioning</projectUrl>
+    <description>The API Explorer extensions for ASP.NET Core API Versioning.</description>
+    <releaseNotes>- Bump patched version due to transitive dependency</releaseNotes>
+    <copyright>© .NET Foundation. All rights reserved.</copyright>
+    <tags>Asp AspNet AspNetCore Versioning ApiExplorer</tags>
+    <repository type="git" url="https://github.com/dotnet/aspnet-api-versioning" commit="b4e6e0f41d3f9fcf7042dc364a45ecbc38b88e4f" />
+    <dependencies>
+      <group targetFramework="net10.0">
+        <dependency id="Asp.Versioning.Mvc" version="10.2.1" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

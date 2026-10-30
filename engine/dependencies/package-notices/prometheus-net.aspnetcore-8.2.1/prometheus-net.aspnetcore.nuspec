@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>prometheus-net.AspNetCore</id>
+    <version>8.2.1</version>
+    <authors>andrasm,qed-,lakario,sandersaares</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>prometheus-net-logo.png</icon>
+    <readme>README.md</readme>
+    <projectUrl>https://github.com/prometheus-net/prometheus-net</projectUrl>
+    <description>ASP.NET Core middleware and stand-alone Kestrel server for exporting metrics to Prometheus</description>
+    <copyright>Copyright © prometheus-net developers</copyright>
+    <tags>metrics prometheus aspnetcore</tags>
+    <repository type="git" url="https://github.com/prometheus-net/prometheus-net" commit="60e9106a83ff1274fec0022c37366f04822b1d1b" />
+    <dependencies>
+      <group targetFramework="net6.0">
+        <dependency id="prometheus-net" version="8.2.1" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework="net6.0">
+        <frameworkReference name="Microsoft.AspNetCore.App" />
+      </group>
+    </frameworkReferences>
+  </metadata>
+</package>

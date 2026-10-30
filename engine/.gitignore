@@ -1,0 +1,13 @@
+.vs
+.vscode
+.idea/
+.DS_Store
+/src/slskd/bin/
+/src/slskd/obj/
+
+/src/slskd/slskd.csproj.user
+/TestResults/
+/dist/
+/logs/
+coverage.json
+

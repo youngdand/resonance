@@ -1,0 +1,10 @@
+web:
+  ip_address: 127.0.0.1
+  port: 5030
+  https:
+    disabled: true
+soulseek:
+  username: null
+  password: null
+shares:
+  directories: []
