@@ -4,7 +4,7 @@
 """Rebuild and package the engine, retaining the corresponding source offer."""
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
-import argparse, os, shutil, subprocess
+import argparse, json, os, shutil, subprocess
 
 ROOT = Path(__file__).resolve().parent
 
@@ -36,6 +36,33 @@ def source_zip(target):
                 archive.write(
                     path, Path("ResonanceEngine-Source") / "engine" / path.relative_to(ROOT)
                 )
+
+
+def copy_runtime_notices(output):
+    """Include notices from the exact runtime packs restored for this executable."""
+    assets = json.loads(
+        (ROOT / "src/slskd/obj/project.assets.json").read_text(encoding="utf-8-sig")
+    )
+    packages = Path(assets["project"]["restore"]["packagesPath"])
+    copied = set()
+    for framework in assets["project"]["frameworks"].values():
+        for dependency in framework.get("downloadDependencies", []):
+            name = dependency["name"]
+            if name not in (
+                "Microsoft.NETCore.App.Runtime.win-x64",
+                "Microsoft.AspNetCore.App.Runtime.win-x64",
+            ):
+                continue
+            version = dependency["version"].lstrip("[(").split(",")[0].rstrip("])").strip()
+            source = packages / name.lower() / version
+            target = output / "runtime-notices" / (name + "-" + version)
+            target.mkdir(parents=True, exist_ok=True)
+            supplied = {p.name.casefold(): p for p in source.iterdir() if p.is_file()}
+            for filename in ("LICENSE.TXT", "THIRD-PARTY-NOTICES.TXT"):
+                shutil.copy2(supplied[filename.casefold()], target / filename)
+            copied.add(name)
+    if len(copied) != 2:
+        raise ValueError("The executable's exact runtime notices could not be resolved.")
 
 
 def main():
@@ -75,6 +102,7 @@ def main():
         ],
         check=True,
     )
+    copy_runtime_notices(output)
     source_zip(output / "Engine-Source.zip")
     www = output / "wwwroot"
     www.mkdir(exist_ok=True)

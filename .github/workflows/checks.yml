@@ -55,11 +55,15 @@ jobs:
       - name: Publish tested candidate
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         shell: bash
         run: |
           version=$(tr -d '\r\n' < VERSION)
           tag="v$version"
           if gh release view "$tag" >/dev/null 2>&1; then
+            # Only this prerelease can be replaced; stable releases stay immutable.
+            test "$(gh release view "$tag" --json isPrerelease --jq .isPrerelease)" = true
+            gh api --method PATCH "repos/$GH_REPO/git/refs/tags/$tag" -f sha="$GITHUB_SHA" -F force=true
             gh release upload "$tag" release/*.zip --clobber
           else
             gh release create "$tag" release/*.zip --target "$GITHUB_SHA" --prerelease --title "Resonance $version" --notes "Release candidate. Includes the matching modified AGPL engine and corresponding source. Read docs/SETUP.md before use. Windows live peer testing remains part of candidate evaluation."
