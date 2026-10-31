@@ -248,7 +248,7 @@ def newsletter(text):
     return items
 
 
-def fetch(s, url, parser, ttl=12 * 3600):
+def fetch(s, url, parser, ttl=12 * 3600, fallback_on_stale=False):
     """Cache parsed valid metadata only; one bounded attempt, independent host failures."""
     host = urlsplit(url).hostname
     if host not in HOSTS or urlsplit(url).scheme != "https":
@@ -266,7 +266,8 @@ def fetch(s, url, parser, ttl=12 * 3600):
         return json.loads(row["value"])
     if not s.settings(True).get("discoveryOnline") or d.job.get("cancel"):
         raise ValueError("Discovery stopped.")
-    cooldown = d.service_cooldowns.get(host, 0)
+    cooldown_key = url if host == "www.allmusic.com" else host
+    cooldown = d.service_cooldowns.get(cooldown_key, 0)
     try:
         if cooldown > time.time():
             raise ValueError("Provider is cooling down after a failed request.")
@@ -295,7 +296,7 @@ def fetch(s, url, parser, ttl=12 * 3600):
                         "INSERT OR REPLACE INTO discovery_cache VALUES (?,?,?)",
                         (key, json.dumps(value), time.time()),
                     )
-                d.service_cooldowns.pop(host, None)
+                d.service_cooldowns.pop(cooldown_key, None)
                 return value
             finally:
                 d.last_fetch[host] = time.monotonic()
@@ -319,10 +320,10 @@ def fetch(s, url, parser, ttl=12 * 3600):
             else 60
         )
         if not isinstance(exc, ValueError):
-            d.service_cooldowns[host] = time.time() + max(60, delay)
+            d.service_cooldowns[cooldown_key] = time.time() + max(60, delay)
         if isinstance(exc, HTTPError):
             exc.close()
-        if row and time.time() - row["updated"] < 30 * 86400:
+        if row and time.time() - row["updated"] < 30 * 86400 and not fallback_on_stale:
             d.add_warning(
                 host
                 + " is unavailable; using cached release listings from "
@@ -357,7 +358,7 @@ def listings(s, country, worldwide=True, begin=None, end=None, on_batch=None, co
         with d.state_lock:
             d.job["progress"] = "Reading " + name + " release listings…"
         try:
-            batch = fetch(s, url, parser)
+            batch = fetch(s, url, parser, fallback_on_stale=name == "AllMusic")
             all_rows.extend(batch)
             if on_batch:
                 on_batch(batch)
@@ -367,9 +368,19 @@ def listings(s, country, worldwide=True, begin=None, end=None, on_batch=None, co
             d.add_warning(str(exc))
             if name == "AllMusic":
                 try:
-                    all_rows.extend(fetch(s, RSS, newsletter))
+                    batch = fetch(s, RSS, newsletter)
+                    all_rows.extend(batch)
+                    if on_batch:
+                        on_batch(batch)
                 except ValueError as fallback:
                     d.add_warning(str(fallback))
+                    try:
+                        batch = fetch(s, url, parser)
+                        all_rows.extend(batch)
+                        if on_batch:
+                            on_batch(batch)
+                    except ValueError:
+                        pass
     if country == "GB" and begin and end and not d.job.get("cancel"):
         expected = {
             (begin + timedelta(days=i)).isoformat()

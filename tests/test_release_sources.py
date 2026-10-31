@@ -71,6 +71,16 @@ class ProviderTests(unittest.TestCase):
         server.diag.close()
         self.tmp.cleanup()
 
+    def test_allmusic_stale_page_falls_back_to_rss_and_reports_batch(self):
+        row = p.allmusic(ALLMUSIC)[0]
+        batches = []
+        with patch.object(p, "fetch", side_effect=[ValueError("HTTP 403"), [row]]) as fetch:
+            rows = p.listings(server, "US", on_batch=batches.append)
+        self.assertTrue(fetch.call_args_list[0].kwargs["fallback_on_stale"])
+        self.assertEqual(fetch.call_args_list[1].args[1], p.RSS)
+        self.assertEqual(batches, [[row]])
+        self.assertTrue(rows)
+
     def library(self, count=1):
         with server.db() as c:
             for i in range(count):
